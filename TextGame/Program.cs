@@ -93,12 +93,12 @@ namespace Sparta
 
         public class Status : Scene, IExit
         {
-            MakeName name = new MakeName();
+            MakeName _name = new MakeName();
 
             public Status()
             {
                 Level = 1;
-                StatusName = name.Name;
+                StatusName = _name.Name;
                 Job = "모험가";
                 Power = 10;
                 Defence = 5;
@@ -157,15 +157,15 @@ namespace Sparta
         {
             public List<StoreItem> StoreItems = new List<StoreItem>();
 
-            private Store store;
-            private Village village;
-            private Status playerStatus;
+            private Store _store;
+            private Village _village;
+            private Status _playerStatus;
 
             public Inventory(Store outsideStore, Village outsideVillage, Status Status)
             {
-                store = outsideStore;
-                village = outsideVillage;
-                playerStatus = Status;
+                _store = outsideStore;
+                _village = outsideVillage;
+                _playerStatus = Status;
             }
 
 
@@ -186,7 +186,7 @@ namespace Sparta
 
             public void ItemList()
             {
-                foreach (StoreItem item in store.StoreItems)
+                foreach (StoreItem item in _store.StoreItems)
                 {
                     if (item.isSold)
                     {
@@ -205,7 +205,7 @@ namespace Sparta
                 Console.WriteLine("인벤토리\r\n보유 중인 아이템을 관리할 수 있습니다.\n");
                 Console.WriteLine("[아이템 목록]");
 
-                foreach (StoreItem item in store.StoreItems)
+                foreach (StoreItem item in _store.StoreItems)
                 {
                     if (item.isSold)
                     {
@@ -243,11 +243,11 @@ namespace Sparta
 
                         if (selectedItem.isWeapons)
                         {
-                            playerStatus.Power += selectedItem.Effect;
+                            _playerStatus.Power += selectedItem.Effect;
                         }
                         else
                         {
-                            playerStatus.Defence += selectedItem.Effect;
+                            _playerStatus.Defence += selectedItem.Effect;
                         }
                     }
 
@@ -257,11 +257,11 @@ namespace Sparta
 
                         if (selectedItem.isWeapons)
                         {
-                            playerStatus.Power -= selectedItem.Effect;
+                            _playerStatus.Power -= selectedItem.Effect;
                         }
                         else
                         {
-                            playerStatus.Defence -= selectedItem.Effect;
+                            _playerStatus.Defence -= selectedItem.Effect;
                         }
                     }
 
@@ -306,13 +306,13 @@ namespace Sparta
 
         public class Store : Scene, IExit
         {
-            StoreItem item = new StoreItem();
-            Status playerStatus;
+            StoreItem _item = new StoreItem();
+            Status _playerStatus;
             public List<StoreItem> StoreItems = new List<StoreItem>();
 
             public Store(Status status)
             {
-                playerStatus = status;
+                _playerStatus = status;
             }
 
             public override void EnterMessage()
@@ -325,7 +325,7 @@ namespace Sparta
             {
 
                 Console.WriteLine("[보유 골드]");
-                Console.WriteLine($"{playerStatus.Gold} G\n");
+                Console.WriteLine($"{_playerStatus.Gold} G\n");
 
             }
 
@@ -357,7 +357,7 @@ namespace Sparta
                 bool stopBuyItems = false;
 
 
-                while (stopBuyItems == false && saveUserInput == "1")
+                while (stopBuyItems == false && _saveUserInput == "1")
                 {
                     string choiceBuyItem = Console.ReadLine();
                     Console.Clear();
@@ -423,9 +423,9 @@ namespace Sparta
                 Console.Write("0. 나가기\r\n\r\n원하시는 행동을 입력해주세요.\r\n>>");
 
                 string buyItem = Console.ReadLine();
-                saveUserInput = buyItem;
+                _saveUserInput = buyItem;
 
-                if (saveUserInput != "0" && saveUserInput != "1")
+                if (_saveUserInput != "0" && _saveUserInput != "1")
                 {
                     Console.Write("해당하는 숫자를 입력하세요.");
                     Thread.Sleep(500);
@@ -439,10 +439,10 @@ namespace Sparta
 
             public void CompareWithMoney(int itemNumber)
             {
-                if (playerStatus.Gold > StoreItems[itemNumber - 1].Price)
+                if (_playerStatus.Gold > StoreItems[itemNumber - 1].Price)
                 {
                     StoreItems[itemNumber - 1].isSold = true;
-                    playerStatus.Gold -= StoreItems[itemNumber - 1].Price;
+                    _playerStatus.Gold -= StoreItems[itemNumber - 1].Price;
 
                 }
 
@@ -465,7 +465,7 @@ namespace Sparta
             {
                 Console.Clear();
 
-                if (saveUserInput == "1")
+                if (_saveUserInput == "1")
                 {
                     EnterMessage();
                     OwnGold();
@@ -493,7 +493,7 @@ namespace Sparta
                 }
             }
 
-            string saveUserInput;
+            string _saveUserInput;
         }
 
         public class StoreItem
