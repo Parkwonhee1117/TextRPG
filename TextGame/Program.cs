@@ -10,11 +10,6 @@ namespace Sparta
         {
             void Exit();
         }
-        // 로그인하여 게임 플레이
-        // 만약 처음이라면 회원가입
-        // 로그인이 처음이라면 캐릭터 생성 화면 띄우기
-        // 로그인에 성공하면 마을,활동창 띄우기
-        // 
         public abstract class Scene
         {
             public abstract void EnterMessage();
@@ -570,9 +565,6 @@ namespace Sparta
                     Console.Clear();
                 }
             } while (gameStart);
-
-            // 구매, 적용, isSold이용해서 해결하기
-            // Exit 깔끔하게 정리하기
         }
     }
 }
